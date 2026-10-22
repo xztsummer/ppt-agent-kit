@@ -1,0 +1,224 @@
+# x-ppt-project
+
+用 AI 把主题或材料做成演示文稿：一个内置多套 PPT 制作 Skill 的工作区。
+
+项目本身不是某个软件，而是一组面向 AI 编程助手（ZCode、Claude Code 等支持 Agent Skill 的工具）的演示文稿生产技能包。你在对话里提出需求，助手负责调研、策划大纲、逐页确认，最后调用合适的 Skill 生成**可编辑 PPTX** 或 **HTML 网页 PPT**。除模型调用外，制作流程都在本地完成。
+
+## 先选 Skill（推荐先看这一节）
+
+**资深用户可以直接手动指定 Skill**，跳过默认的调研与策划编排，一句话下达制作任务即可。
+
+一般场景推荐：
+
+| 场景 / 需求 | 推荐 Skill | 输出格式 |
+|---|---|---|
+| 严格套用公司模板（中国电子云、中国电信、中汽研等） | `skills\ppt-master` | 可编辑 PPTX |
+| 复杂、豪华感版式 | `skills\gorden-ppt-skill` | 可编辑 PPTX |
+| 汇报、类 PPT、常规演示 | `skills\html-ppt` | HTML |
+| 杂志风、设计感、演讲分享 | `skills\guizang-ppt-skill` | HTML |
+
+没有明确偏好时，直接用自然语言描述需求即可。按 `AGENTS.md` 的约定，项目默认执行 `skills\ppt-planner-maker`，由它完成需求调研、大纲策划和制作路由，再自动选择上面的制作 Skill。
+
+几点约束：
+
+- **严格套公司模板时只能输出可编辑 PPTX**，不能同时要求 HTML；两者冲突时流程会先请你调整需求。
+- `gorden-ppt-skill` 的内置模板与其素材**仅限个人学习和研究，禁止商业用途**。商业演示、客户提案、企业内部经营用途请改用 `ppt-master` 自由设计，或使用公司模板。
+- HTML 是网页演示，不是 PowerPoint；不要把 HTML 文件改名为 `.pptx`。
+
+### 制作任务示例
+
+**自由设计 PPTX（ppt-master）**
+
+```text
+使用 skills\ppt-master 技能
+读取源文件 `references\TREMAC与可信数据空间技术融合探索_10页发言稿.md`，基于其完整内容生成一份可直接放映的 PPT 演示文稿。
+整体风格简洁、专业、高级感，白底蓝色科技风格，蓝色十六进制色号是： #0058FF
+最后生成的文件输出到 /output 目录，命名为：TREMAC与可信数据空间技术融合探索_qoder+ds41flash+pptmatster.pptx
+```
+
+**杂志风 / 设计感 HTML（guizang-ppt-skill）**
+
+```text
+使用 skills\guizang-ppt-skill 技能
+读取源文件 `references\TREMAC与可信数据空间技术融合探索_10页发言稿.md`，基于其完整内容生成一份可直接放映的 PPT 演示文稿。
+整体风格简洁、专业、高级感，白底蓝色科技风格，蓝色十六进制色号是： #0058FF
+最后生成的文件输出到 /output 目录，命名为：TREMAC与可信数据空间技术融合探索_wb+minimax31+guizang
+```
+
+**公司模板 PPTX（ppt-master + 中国电子云 deck）**
+
+```text
+使用 skills\ppt-master 技能
+以及  skills\ppt-master\templates\decks\中国电子云  deck模板
+读取源文件 `references\TREMAC与可信数据空间技术融合探索_10页发言稿.md`，基于其完整内容生成一份可直接放映的 PPT 演示文稿。
+整体风格简洁、专业、高级感
+最后生成的文件输出到 /output 目录，命名为：TREMAC与可信数据空间技术融合探索_中国电子云_qoder+ds41flash+pptmatster.pptx
+```
+
+**复杂豪华 PPTX（gorden-ppt-skill）**
+
+```text
+使用 skills\gorden-ppt-skill 技能
+读取源文件 `references\TREMAC与可信数据空间技术融合探索_10页发言稿.md`，基于其完整内容生成 PPT 演示文稿。
+PPT整体风格复杂、豪华、专业、高级，白底蓝色科技风格，蓝色十六进制色号是： #0058FF
+最后生成的文件输出到 /output 目录，命名为：TREMAC与可信数据空间技术融合探索_qoder+ds41flash+gordenppt豪华蓝.pptx
+```
+
+输出目录、文件名和源文件都可以替换；HTML 分支建议在文件名后显式补上 `.html` 扩展名。
+
+## 快速开始
+
+### 1. 准备环境
+
+- 支持 Agent Skill 的 AI 工具（ZCode、Claude Code、Cursor 等）
+- Python 3.10+（运行 `ppt-master` 与 `gorden-ppt-skill` 的制作脚本）
+- Node.js 18+（可选，用于 guizang 的演讲者模式与 Swiss deck 校验脚本）
+- Google Chrome（可选，用于把 HTML 页面渲染成 PNG 做视觉检查）
+
+### 2. 安装依赖
+
+```bash
+pip install -r skills/ppt-master/requirements.txt
+```
+
+`ppt-master` 的多数脚本只用标准库；上面的依赖用于 SVG 转 PPTX、PDF/Word/Excel 解析、AI 生图、旁白音频等增强能力。`gorden-ppt-skill` 所需的 `python-pptx` 也已包含在内。
+
+### 3. 放入素材（可选）
+
+把参考文档、旧 PPT、图片等放进 `references/`，对话时直接说明文件名即可。素材只作为信息来源，不会被覆盖。
+
+### 4. 向 AI 提出需求
+
+默认流程（推荐第一次使用）：
+
+> 帮我做一份 15 页的《可信数据空间》汇报 PPT，听众是客户，讲解 30 分钟，风格专业简洁。
+
+手动指定 Skill：
+
+> 用 ppt-master，严格套中国电子云公司模板，把 `references/方案.docx` 做成一份 20 页的汇报 PPT。
+
+> 用 guizang-ppt-skill 做一份杂志风的网页 PPT，主题是“AI 与设计”，用于线下分享。
+
+> 用 html-ppt 做一份 8 页的技术分享 slides，白底蓝色科技风。
+
+### 5. 确认并生成
+
+默认流程会逐阶段把**完整内容展示在对话里**，你确认后才保存文档并进入下一步：
+
+1. 确认需求（主题、听众、时长、模板要求、输出格式、视觉风格）
+2. 确认规划思路（叙事主线、章节、页数、时间分配）
+3. 逐页确认大纲（每页标题、结论、内容、呈现建议）
+4. 自动路由到制作 Skill，生成并检查成品
+
+### 6. 取成品
+
+所有生成物都在 `projects/` 下，按 `YYYYMMDDHHmm_主题名/` 归档，成品文件与目录同名：
+
+```text
+projects/202610220848_可信数据空间/
+├── 需求调研.md
+├── PPT规划思路.md
+├── PPT详细大纲_确认版.md
+├── 202610220848_可信数据空间.html     # HTML 分支
+├── 202610220848_可信数据空间.pptx     # PPTX 分支
+├── assets/                            # HTML 的本地资源（如有）
+└── render/                            # 页面预览图
+```
+
+## 目录结构
+
+```text
+x-ppt-project/
+├── AGENTS.md                  # 未指定 Skill 时的默认路由
+├── README.md
+├── skills/
+│   ├── ppt-planner-maker/     # 流程编排：调研 → 大纲 → 确认 → 制作（默认）
+│   ├── ppt-master/            # PPTX：公司模板 / 自由设计 / 模板提炼 / 美化
+│   ├── gorden-ppt-skill/      # PPTX：21 套内置中文模板
+│   ├── html-ppt/              # HTML：36 主题、36 版式、演讲者模式
+│   └── guizang-ppt-skill/     # HTML：电子杂志 / 瑞士国际主义风格
+├── references/                # 你提供的参考素材
+├── projects/                  # 按任务归档的文档与成品
+└── 【只读】不同模型+skill组合效果示例/   # 同主题不同组合的成品样例
+```
+
+## 各 Skill 能力速览
+
+### ppt-master
+
+原生可编辑 PPTX 工作流，适合公司模板和正式业务场景。提供五条路线：
+
+- **Generate PPTX**：从材料或主题生成新 deck，支持“复杂豪华”和“专业简洁”两档偏好
+- **Beautify**：对已有 PPTX 做 1:1 美化，不改内容结构
+- **Image to PPTX**：把页面图片重建为可编辑对象
+- **Create Template**：从 PPTX、图片或品牌资产提炼可复用的 Brand / Style / Layout / Deck 模板
+- **Edit Native PPTX**：把新内容填入已有 `.pptx`，未改动页面逐字节保留
+
+内置 `templates/decks/` 下有中国电子云、中国电信、中汽研等公司模板。输出为原生形状、图表、表格、公式和母版继承，不是整页截图。依赖见 `skills/ppt-master/requirements.txt`，使用前会执行归属校验脚本。
+
+### gorden-ppt-skill
+
+内置 **21 套中文 PPT 模板**，覆盖工作汇报、年终总结、述职竞聘、项目复盘、开题答辩、商务提案、教学课件、数据可视化等场景。核心能力是**只替换文字、不破坏原模板的排版、配色和字号**，并带文本框溢出检测和同级标题字号一致性校验；也支持原创简洁版式。
+
+首次使用时 Skill 会运行 `python3 scripts/apply_update.py` 做增量更新；Windows 上若 `python3` 不可用，改用 `python`。**注意其非商业许可**。
+
+### html-ppt
+
+纯静态 HTML 演示文稿，无需构建：
+
+- 36 套主题、15 套整套模板、36 种页面布局、47 种动画（27 个 CSS + 20 个 Canvas FX）
+- 键盘翻页、触屏滑动、`S` 键演讲者模式（当前页 / 下一页 / 逐字稿 / 计时器）
+- 单文件 HTML，字体走 CDN，断网时回退系统字体
+- 自带 headless Chrome 截图脚本（`scripts/render.sh`，默认写死 macOS 的 Chrome 路径，Windows 使用需调整）
+
+适合汇报、技术分享、产品介绍等“类 PPT”场景。
+
+### guizang-ppt-skill
+
+单文件 HTML 横向翻页 PPT，提供两种视觉基调：
+
+- **电子杂志 × 电子墨水**：衬线标题、WebGL 流体/等高线背景、暖色，适合人文分享、行业观察、商业发布
+- **瑞士国际主义**：无衬线字体、网格点阵、高反差功能色（IKB 蓝 / 柠檬黄 / 柠檬绿 / 安全橙），适合科技产品、数据汇报、设计工程分享
+
+支持演讲者视图、观众屏同步、讲稿备注、章节幕封、数据大字报、激光笔和圈选。适合线下分享、发布会、demo day 等强个人风格的演讲；大量表格和密集培训内容不适合。
+
+## 默认工作流说明
+
+`skills\ppt-planner-maker` 是流程编排 Skill，本身不直接画页面，负责把“想法”变成可执行的制作任务。它提供两个入口：
+
+- **入口①：规划 PPT 大纲** —— 从主题开始，调研需求、对齐思路、逐页策划，确认后再制作
+- **入口②：已有大纲，直接制作** —— 保留原大纲的顺序和原意，补齐逐页制作信息后制作
+
+全程遵循同一条规则：**先在对话中完整展示，用户明确确认后才写 Markdown，再进入下一步**。确认版大纲是制作的唯一内容依据；制作阶段可以压缩措辞、拆分文字层级，但不能遗漏结论、数据和约束，也不能擅自改页数或顺序。
+
+制作路由规则（与上面的推荐表一致）：
+
+| 公司模板 | 输出格式 / 用途 | 制作 Skill |
+|---|---|---|
+| 是 | 可编辑 PPTX | `ppt-master`（公司 deck 模板） |
+| 否 | 可编辑 PPTX，商业或企业业务 | `ppt-master`（自由设计） |
+| 否 | 可编辑 PPTX，个人学习研究且符合许可 | `gorden-ppt-skill` |
+| 否 | HTML，明确要求杂志风 / 杂志感 / 设计感 | `guizang-ppt-skill` |
+| 否 | HTML，其余需求 | `html-ppt` |
+
+成品交付前会按对应格式做检查：PPTX 检查页数、文字可编辑性、排版渲染；HTML 在真实浏览器中检查翻页、资源加载、配色和演讲者视图。
+
+## 效果示例
+
+`【只读】不同模型+skill组合效果示例/` 放了同一主题（TREMAC 与可信数据空间技术融合探索）在不同模型与 Skill 组合下的成品，包括 `ppt-master` 套/不套公司模板、`gorden-ppt-skill`、`html-ppt`、`guizang-ppt-skill` 以及 HTML/PPTX 两种格式，可用于选型时对比效果。
+
+该目录为只读参考，请不要修改或删除其中的文件。
+
+## 常见问题
+
+**必须用公司模板，但想要 HTML 版？** 流程会提示二者冲突。公司模板路线只产出可编辑 PPTX，需要你修改其中一项要求。
+
+**生成的 HTML 能直接发给别人吗？** 可以，但要连同项目内的 `assets/`、`images/` 一起发送并保持相对路径。若使用了 CDN 字体或外部图标，完全离线放映前需实际断网验证。
+
+**为什么 Windows 上 `python3` 没反应？** Windows 可能只有 `python` 命令，或 `python3` 指向 Microsoft Store 的占位程序。改用 `python` 即可。
+
+**项目里的示例文件能改吗？** `【只读】不同模型+skill组合效果示例/` 是只读样例；自己的成品放在 `projects/` 下。
+
+## 许可与来源
+
+各 Skill 保留各自许可证与版权声明，详见对应目录下的 `LICENSE`、`NOTICE.md` 和 `README.md`。其中 `ppt-master` 为 MIT；`html-ppt` 为 MIT；`gorden-ppt-skill` 及其内置模板仅限个人学习研究、禁止商业使用；`guizang-ppt-skill` 的来源与赞助信息见其 `SKILL.md`。

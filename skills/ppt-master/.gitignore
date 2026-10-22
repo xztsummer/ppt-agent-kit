@@ -1,0 +1,13 @@
+# Python runtime artifacts
+__pycache__/
+*.pyc
+
+# Local secrets — never commit real keys
+.env
+
+# Project workspaces created at runtime
+projects/
+
+# OS noise
+.DS_Store
+Thumbs.db

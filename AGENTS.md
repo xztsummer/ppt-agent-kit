@@ -1,0 +1,1 @@
+用户不手动指定skill时，项目默认执行 'skills\ppt-planner-maker' 这个skill。
