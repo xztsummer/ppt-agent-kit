@@ -1,4 +1,0 @@
-interface:
-  display_name: "PPT 大纲规划与制作"
-  short_description: "梳理需求、对齐叙事、确认逐页大纲，并按公司模板与输出格式完成演示文稿"
-  default_prompt: "请使用 $ppt-planner-maker 帮我规划 PPT 大纲，或把已有大纲制作成演示文稿。"
