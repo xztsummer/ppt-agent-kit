@@ -1,4 +1,4 @@
-# x-ppt-project
+# ppt-agent-kit
 
 用 AI 把主题或材料做成演示文稿：一个内置多套 PPT 制作 Skill 的工作区。
 
@@ -133,7 +133,7 @@ projects/202610220848_可信数据空间/
 ## 目录结构
 
 ```text
-x-ppt-project/
+ppt-agent-kit/
 ├── AGENTS.md                  # 未指定 Skill 时的默认路由
 ├── README.md
 ├── skills/
