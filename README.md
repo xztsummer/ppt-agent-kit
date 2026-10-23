@@ -1,8 +1,15 @@
 # ppt-agent-kit
 
-用 AI 把主题或材料做成演示文稿：一个内置多套 PPT 制作 Skill 的工作区。
+面向 AI 助手的演示文稿技能工具包：从需求调研、大纲策划到制作与修改，支持可编辑 PPTX 和 HTML 演示文稿。
 
-项目本身不是某个软件，而是一组面向 AI 编程助手（ZCode、Claude Code 等支持 Agent Skill 的工具）的演示文稿生产技能包。你在对话里提出需求，助手负责调研、策划大纲、逐页确认，最后调用合适的 Skill 生成**可编辑 PPTX** 或 **HTML 网页 PPT**。除模型调用外，制作流程都在本地完成。
+**PPT Agent Kit** 集成 5 个 Agent Skill，可在 ZCode、Claude Code 等支持 Agent Skill 的 AI 工具中使用。你用自然语言描述主题、提供材料或提出修改要求，助手按需完成需求调研、大纲策划与确认，再调用合适的制作 Skill 生成并检查成品。
+
+- **从主题到成品**：支持从零策划、基于已有大纲制作，以及修改或美化现有 PPTX。
+- **多种制作方式**：公司模板、自由设计、内置中文模板，以及常规、杂志风和瑞士风网页演示。
+- **两类输出格式**：可编辑 PowerPoint（`.pptx`）与 HTML 网页演示，按需求选择。
+- **统一流程与归档**：默认由 `ppt-planner-maker` 编排，需求、确认稿、素材和成品按任务保存；熟悉流程后也可直接指定制作 Skill。
+
+克隆仓库后，用支持 Agent Skill 的 AI 工具打开项目目录，即可按下方说明开始使用。模型调用及部分增强功能需要联网，文档与成品在本地生成和保存。
 
 ## 【资深用户】先选 Skill（推荐先看这一节）
 
@@ -70,6 +77,15 @@ PPT整体风格复杂、豪华、专业、高级，白底蓝色科技风格，�
 ## 【普通用户】快速开始
 
 ### 1. 准备环境
+
+先克隆仓库，并用 AI 工具打开 `ppt-agent-kit` 目录：
+
+```bash
+git clone https://github.com/xztsummer/ppt-agent-kit.git
+cd ppt-agent-kit
+```
+
+环境要求：
 
 - 支持 Agent Skill 的 AI 工具（ZCode、Claude Code、Cursor 等）
 - Python 3.10+（运行 `ppt-master` 与 `gorden-ppt-skill` 的制作脚本）
