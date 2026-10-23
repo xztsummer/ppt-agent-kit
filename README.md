@@ -1,15 +1,32 @@
 # ppt-agent-kit
 
+**中文** | [English](README.en.md)
+
 面向 AI 助手的演示文稿技能工具包：从需求调研、大纲策划到制作与修改，支持可编辑 PPTX 和 HTML 演示文稿。
 
+An agent-skill toolkit for AI assistants that carries a deck from requirement research through outlining, production and revision, and delivers editable PPTX or HTML presentations.
+
 **PPT Agent Kit** 集成 5 个 Agent Skill，可在 ZCode、Claude Code 等支持 Agent Skill 的 AI 工具中使用。你用自然语言描述主题、提供材料或提出修改要求，助手按需完成需求调研、大纲策划与确认，再调用合适的制作 Skill 生成并检查成品。
+
+**PPT Agent Kit** bundles five agent skills and works in any AI tool that supports Agent Skills, such as ZCode or Claude Code. Describe a topic, supply materials, or request changes in natural language; the assistant researches the requirement, plans and confirms the outline, then calls the right production skill to build and verify the deck.
 
 - **从主题到成品**：支持从零策划、基于已有大纲制作，以及修改或美化现有 PPTX。
 - **多种制作方式**：公司模板、自由设计、内置中文模板，以及常规、杂志风和瑞士风网页演示。
 - **两类输出格式**：可编辑 PowerPoint（`.pptx`）与 HTML 网页演示，按需求选择。
 - **统一流程与归档**：默认由 `ppt-planner-maker` 编排，需求、确认稿、素材和成品按任务保存；熟悉流程后也可直接指定制作 Skill。
 
+- **From topic to finished deck**: plan from scratch, build from an existing outline, or revise and beautify an existing PPTX.
+- **Several production routes**: corporate templates, free design, 21 built-in Chinese templates, plus conventional, magazine-style and Swiss-style web decks.
+- **Two output formats**: editable PowerPoint (`.pptx`) or an HTML web deck, chosen per request.
+- **One orchestrated workflow**: `ppt-planner-maker` runs the process by default and archives requirements, confirmed drafts, source material and deliverables per task; once familiar with the flow you can call a production skill directly.
+
 克隆仓库后，用支持 Agent Skill 的 AI 工具打开项目目录，即可按下方说明开始使用。模型调用及部分增强功能需要联网，文档与成品在本地生成和保存。
+
+Clone the repository, open the project folder in an AI tool that supports Agent Skills, and follow the steps below. Model calls and some enhanced features need network access; documents and deliverables are generated and saved locally.
+
+> ⚠️ **商用前必读**：本仓库原创部分（`ppt-planner-maker`、根目录文档、`tests/`）采用 **CC BY-NC 4.0，禁止商业使用**；`gorden-ppt-skill` 的内置模板与素材同样禁止商用。其余第三方组件按各自许可证使用：`ppt-master`、`html-ppt` 为 MIT，`guizang-ppt-skill` 为 AGPL-3.0。详见 [许可与商用范围](#许可与商用范围)、[`LICENSE`](LICENSE) 和 [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md)。
+>
+> ⚠️ **Before commercial use**: the original parts of this repository (`ppt-planner-maker`, the root documents and `tests/`) are licensed **CC BY-NC 4.0 — no commercial use**; the built-in templates and assets of `gorden-ppt-skill` are non-commercial as well. Other third-party components follow their own licenses: `ppt-master` and `html-ppt` are MIT, `guizang-ppt-skill` is AGPL-3.0. See [License and commercial scope](README.en.md#license-and-commercial-scope), [`LICENSE`](LICENSE) and [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md).
 
 ## 【资深用户】先选 Skill（推荐先看这一节）
 
@@ -151,7 +168,10 @@ projects/202610220848_可信数据空间/
 ```text
 ppt-agent-kit/
 ├── AGENTS.md                  # 未指定 Skill 时的默认路由
-├── README.md
+├── README.md                  # 中文（默认）
+├── README.en.md               # English
+├── LICENSE                    # 原创部分许可：CC BY-NC 4.0（禁止商用）
+├── THIRD_PARTY_NOTICES.md     # 第三方 Skill 的许可证与商用限制
 ├── skills/
 │   ├── ppt-planner-maker/     # 流程编排：调研 → 大纲/修改方案 → 确认 → 制作（默认）
 │   ├── ppt-master/            # PPTX：公司模板 / 自由设计 / 模板提炼 / 美化
@@ -181,7 +201,7 @@ ppt-agent-kit/
 
 内置 **21 套中文 PPT 模板**，覆盖工作汇报、年终总结、述职竞聘、项目复盘、开题答辩、商务提案、教学课件、数据可视化等场景。核心能力是**只替换文字、不破坏原模板的排版、配色和字号**，并带文本框溢出检测和同级标题字号一致性校验；也支持原创简洁版式。
 
-首次使用时 Skill 会运行 `python3 scripts/apply_update.py` 做增量更新；Windows 上若 `python3` 不可用，改用 `python`。**注意其非商业许可**。
+首次使用时 Skill 会运行 `python3 scripts/apply_update.py` 做增量更新；Windows 上若 `python3` 不可用，改用 `python`。**注意：非商业限制只针对其内置模板与素材，代码部分为 MIT**。
 
 ### html-ppt
 
@@ -245,6 +265,37 @@ ppt-agent-kit/
 
 **项目里的示例文件能改吗？** `【只读】不同模型+skill组合效果示例/` 是只读样例；自己的成品放在 `projects/` 下。
 
-## 许可与来源
+## 许可与商用范围
 
-各 Skill 保留各自许可证与版权声明，详见对应目录下的 `LICENSE`、`NOTICE.md` 和 `README.md`。其中 `ppt-master` 为 MIT；`html-ppt` 为 MIT；`gorden-ppt-skill` 及其内置模板仅限个人学习研究、禁止商业使用；`guizang-ppt-skill` 的来源与赞助信息见其 `SKILL.md`。
+本仓库的授权是分层的：**原创部分非商业，第三方组件各按原许可证**。对外发布或商用前，请按下表逐项核对：
+
+| 组件 | 许可证 / 来源 | 商业使用 |
+|---|---|---|
+| `skills/ppt-master` | MIT，Copyright (c) 2025-2026 Hugo He | 允许；保留版权声明与 `LICENSE`、`SPONSORS*.md` |
+| `skills/html-ppt` | MIT，Copyright (c) 2026 lewis | 允许；保留版权声明 |
+| `skills/guizang-ppt-skill` | AGPL-3.0，© 2026 op7418 | 允许；修改后分发或作为网络服务提供时，须按 AGPL 开放对应源码 |
+| `skills/gorden-ppt-skill` 的脚本、`references/` 与元数据 | MIT，Copyright (c) 2026 GordenSun | 允许 |
+| `skills/gorden-ppt-skill/templates/` 下的 `.pptx` 与模板预览图 | 第三方模板作者版权，非商业许可（见 `NOTICE.md`） | **禁止**；仅限个人学习与研究 |
+| `skills/ppt-planner-maker/`、根目录文档与 `tests/` | CC BY-NC 4.0，Copyright (c) 2026 xztsummer（见 `LICENSE`） | **禁止**商业使用；非商业使用须署名并保留许可链接 |
+
+完整条款见根目录 [`LICENSE`](LICENSE)（原创部分）与 [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md)（第三方组件）。
+
+关于“禁止商用”的几点说明：
+
+- **原创部分的“禁止商用”来自根目录 `LICENSE`**：`ppt-planner-maker`、README/AGENTS 与 `tests/` 采用 CC BY-NC 4.0，商业使用须另行取得书面授权；该许可不影响 `skills/` 下的第三方 Skill。
+- **不要给 MIT / AGPL 组件追加“禁止商用”**：MIT 明确允许商业使用，AGPL-3.0 也允许商用（仅附带开源义务）。在上游代码上再写“禁止商用”，与上游许可证不一致，再分发时还会冲突。
+- **分发本仓库时**：必须保留各目录下的 `LICENSE`、`NOTICE.md`、`SPONSORS*.md` 与版权声明，不得删除或改写；根目录 `LICENSE` 与 `THIRD_PARTY_NOTICES.md` 也应一并保留。
+- **`gorden-ppt-skill` 的代码与模板是两套条款**：其 `LICENSE` 末尾已注明 MIT 仅覆盖代码，模板另见 `NOTICE.md`。README 中不要笼统写成“该 Skill 禁止商用”。
+
+### 商用自查
+
+| 你的用法 | 结论 |
+|---|---|
+| 用公司模板或 `ppt-master` 自由设计做客户提案、销售物料、企业内部经营汇报 | 可以（MIT） |
+| 用 `gorden-ppt-skill` 的 21 套内置模板做上述任何商业用途 | **不可以**；改用 `ppt-master` 或公司模板 |
+| 用 `guizang-ppt-skill` / `html-ppt` 做商业发布会、产品介绍 | 可以；但分发或改造 Skill 本身时须遵守 AGPL / MIT |
+| 将 `ppt-planner-maker`、本仓库文档或 `tests/` 用于付费课程、付费产品 / 服务、客户交付 | **不可以**（CC BY-NC 4.0）；需取得维护者书面授权 |
+| 在非商业分享、教学或研究中署名使用上述原创部分 | 可以；注明来源并附 CC BY-NC 4.0 许可链接 |
+| 把本仓库打包出售、做成付费 SaaS，或作为付费课程附赠 | 逐项核对：原创部分禁止商用（CC BY-NC 4.0），MIT 部分须保留声明，AGPL 部分须开源，`gorden-ppt-skill` 模板不可包含 |
+
+> 以上是使用层面的说明，不构成法律意见；正式商用前请以根目录 `LICENSE`、`THIRD_PARTY_NOTICES.md` 及各目录下的许可证原文为准，并注意 `ppt-master` 内置图标、音效等第三方资产的独立许可。
